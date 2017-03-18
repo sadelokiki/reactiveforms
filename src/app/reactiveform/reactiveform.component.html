@@ -1,0 +1,37 @@
+<div class="container"> 
+  <div class="jumbotron">
+      <h2>Reactive Form</h2>
+      <form [formGroup]="reactiveForm" (ngSubmit)="submitForm(reactiveForm.value)">
+        <div class="form-group" [ngClass]="{'has-error':!reactiveForm.controls['firstName'].valid}">
+          <label>First Name:</label>
+          <input class="form-control" type="text" placeholder="John" [formControl]="reactiveForm.controls['firstName']">
+        </div>
+        <div class="form-group" [ngClass]="{'has-error':!reactiveForm.controls['lastName'].valid}">
+          <label>Last Name</label>
+          <input class="form-control" type="text" placeholder="Doe" [formControl]="reactiveForm.controls['lastName']">
+          <div *ngIf="reactiveForm.controls['lastName'].hasError('required') && reactiveForm.controls['lastName'].touched" class="alert alert-danger">You must include a last name.</div>
+         <div *ngIf="reactiveForm.controls['lastName'].hasError('minlength') && reactiveForm.controls['lastName'].touched" class="alert alert-danger">Your last name must be at least 5 characters long.</div>
+         <div *ngIf="reactiveForm.controls['lastName'].hasError('maxlength') && reactiveForm.controls['lastName'].touched" class="alert alert-danger">Your last name cannot exceed 10 characters.</div>
+        </div>
+        <div class="form-group" [ngClass]="{'has-error':!reactiveForm.controls['gender'].valid}">
+          <label>Gender</label>
+          <div class="alert alert-danger" *ngIf="!reactiveForm.controls['gender'].valid && !reactiveForm.controls['gender'].touched">You must select a gender.</div>
+        </div>
+        <div class="radio" >
+          <label>
+            <input type="radio" name="gender" value="Male" [formControl]="reactiveForm.controls['gender']">
+            Male
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="gender" value="Female" [formControl]="reactiveForm.controls['gender']">
+            Female
+          </label>
+        </div>
+        <div class="form-group">
+          <button type="submit" [ngClass]="'btn btn-primary'" [disabled]="!reactiveForm.valid" >Submit</button>
+        </div>
+      </form>
+    </div>
+</div>
